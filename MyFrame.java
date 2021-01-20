@@ -232,7 +232,7 @@ public class MyFrame extends JFrame implements ActionListener{
 		}
 		if(e.getSource()==button3)
 		{
-			// vieworderframe();  
+			vieworderframe();  
 		}
 		if(e.getSource()==button4)
 		{
@@ -366,7 +366,7 @@ public class MyFrame extends JFrame implements ActionListener{
 	public void additemtoreceipt()
 	{
 		int ordernumber = Integer.parseInt(this.ordernumber);
-		receipt[ordernumber-1] = textbox2.getText() + " " + description + " $" + price + " " + quantity + " " + PercentDisc + "% $" + currentSubtotal;
+		receipt[ordernumber-1] = ordernumber + ". " + textbox2.getText() + " " + description + " $" + price + " " + quantity + " " + PercentDisc + "% $" + currentSubtotal;
 	}
 	
 	public void nomoreitems()
@@ -381,29 +381,36 @@ public class MyFrame extends JFrame implements ActionListener{
 		button4.setEnabled(true);
 		button5.setEnabled(true);
 		button6.setEnabled(true);
+		/*for(int i = 0; i < 50; i++)
+		{
+			System.out.println(receipt[i]);
+		}*/
 	}
 	public void vieworderframe()
 	{
 		vieworderframe = new JFrame();
-		// vieworderframe.setLayout(new GridLayout(2,1));
-		JLabel locallabel = new JLabel();
-		locallabel.setText(receipt[0]);
-		vieworderokbutton = new JButton();
-		vieworderokbutton.addActionListener(this);
-		vieworderokbutton.setText("Ok");
+		vieworderframe.setLayout(new BorderLayout());
+		
+		JList locallist = new JList(receipt);
 		vieworderframe.setTitle("Message");
-		vieworderframe.add(locallabel);
-		vieworderframe.setLayout(new GridLayout(2,1));
-		vieworderframe.setSize(300,300);
+		vieworderframe.add(locallist, BorderLayout.CENTER);
+		System.out.println(Integer.parseInt(ordernumber));
+		 vieworderframe.setSize(450,200);
 		vieworderframe.setResizable(true);
 		vieworderframe.setVisible(true);
 		
-		// vieworderframe.add(vieworderokbutton);
+		JPanel panelforbutton = new JPanel();
+		panelforbutton.setLayout(new FlowLayout());
+		panelforbutton.setBackground(Color.blue);
+		vieworderokbutton = new JButton();
+	    vieworderokbutton.addActionListener(this);
+		vieworderokbutton.setText("Ok");
+		panelforbutton.add(vieworderokbutton);
+		vieworderframe.add(panelforbutton, BorderLayout.SOUTH);
 	}
 	
 	public void newOrder()
 	{
-		ordernumber = "0";
 		textbox1.setText("");
 		textbox2.setText("");
 		textbox3.setText("");
@@ -414,13 +421,20 @@ public class MyFrame extends JFrame implements ActionListener{
 		label4.setText("Item #1 info");
 		label5.setText("Order subtotal for 0 item(s):");
 		button1.setEnabled(true);
+		button1.setText("Process Item #1");
 		button2.setEnabled(false);
+		button2.setText("Process Item #1");
 		button3.setEnabled(false);
 		button4.setEnabled(false);
 		button5.setEnabled(true);
 		button6.setEnabled(true);
 		currentSubtotal = "0";
 		grandtotal = "0";
+		for(int i = 0; i < Integer.parseInt(this.ordernumber); i++)
+		{
+			receipt[i] = null;
+		}
+		ordernumber = "0";
 	}
 	
 	public void notinfile()
